@@ -15,11 +15,23 @@ export default function Testimonials() {
   ];
 
   return (
-    <section id="testimonials" className="py-20 text-center" style={{ background: "var(--background)" }}>
-      <h2 className="text-3xl font-bold mb-10">What Creators Say</h2>
+    <section className="py-20 text-center bg-[#0a0a0a]">
+      <h2
+        className="text-3xl font-bold mb-10"
+        style={{
+          background: "linear-gradient(90deg, #a21caf 0%, #2563eb 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}
+      >
+        What Creators Say
+      </h2>
       <div className="flex flex-wrap justify-center gap-8">
         {testimonials.map((t, i) => (
-          <div key={i} className="max-w-xs p-6 rounded shadow" style={{ background: "var(--background)" }}>
+          <div
+            key={i}
+            className="max-w-xs p-6 bg-white/5 backdrop-blur-md rounded-2xl shadow-lg text-white"
+          >
             <p className="italic mb-4">“{t.quote}”</p>
             <p className="font-semibold">{t.name}</p>
           </div>

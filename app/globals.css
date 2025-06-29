@@ -2,7 +2,7 @@
 
 :root {
   --background: #0a0a0a;
-  --foreground: #b0b0b0; /* light grey for text */
+  --foreground: #fff; /* white for all text */
   --form-border: #b0b0b0; /* grey for form lines */
 }
 
@@ -12,7 +12,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Make all text grey by default */
+/* Make all text white by default */
 * {
   color: var(--foreground);
 }
@@ -24,7 +24,7 @@ input, textarea, select {
   border-color: var(--form-border);
 }
 
-/* Label text grey */
+/* Label text white */
 label, span {
   color: var(--foreground);
 }

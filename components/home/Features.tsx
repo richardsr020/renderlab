@@ -23,16 +23,34 @@ export default function Features() {
   ];
 
   return (
-    <section id="features" className="py-20 text-center" style={{ background: "var(--background)" }}>
-      <h2 className="text-3xl font-bold mb-10">How RenderLab Works</h2>
-      <div className="flex flex-wrap justify-center gap-10">
+    <section className="relative py-20 bg-[#0a0a0a] flex flex-col items-center">
+      <h2
+        className="text-3xl md:text-4xl font-bold mb-10 text-center"
+        style={{
+          background: "linear-gradient(90deg, #a21caf 0%, #2563eb 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+        }}
+      >
+        How RenderLab Works
+      </h2>
+      <div className="flex flex-wrap justify-center gap-8">
         {features.map((f, i) => (
-          <div key={i} className="max-w-xs">
-            <h3 className="text-xl font-semibold mb-2">{f.title}</h3>
-            <p>{f.desc}</p>
+          <div
+            key={i}
+            className="max-w-xs w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg p-6"
+          >
+            <h3 className="text-xl font-semibold mb-2" style={{
+              background: "linear-gradient(90deg, #a21caf 0%, #2563eb 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+            }}>{f.title}</h3>
+            <p className="text-[#b0b0b0]">{f.desc}</p>
           </div>
         ))}
       </div>
+      {/* Gradient Glow */}
+      <div className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[600px] h-[200px] rounded-full bg-gradient-to-r from-purple-700 via-pink-500 to-blue-700 opacity-20 blur-3xl pointer-events-none"></div>
     </section>
   );
 }
