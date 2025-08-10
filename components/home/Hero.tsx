@@ -1,9 +1,9 @@
 "use client";
 import { useState } from "react";
-import SignupForm from "../SignupForm";
+import RegisterForm from "../RegisterForm";
 
 export default function Hero() {
-  const [showSignup, setShowSignup] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   return (
     <section className="relative flex flex-col items-center justify-center min-h-[70vh] px-4 py-20 bg-[#0a0a0a] overflow-hidden">
@@ -23,10 +23,10 @@ export default function Hero() {
           Instantly turn your scripts into cinematic, AI-powered visual stories for social media.
         </p>
         <button
-          onClick={() => setShowSignup(true)}
+          onClick={() => setShowRegister(true)}
           className="px-8 py-3 rounded-full bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 text-white font-bold text-lg shadow-lg hover:scale-105 transition-transform"
         >
-          Start Creating
+          Get Started
         </button>
       </div>
       {/* Gradient Glow */}
@@ -36,17 +36,17 @@ export default function Hero() {
       </div>
       {/* Decorative Borders */}
       <div className="absolute top-0 left-0 w-full h-full border-2 border-dashed border-white/10 rounded-3xl pointer-events-none"></div>
-      {showSignup && (
+      {showRegister && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="relative">
             <button
-              onClick={() => setShowSignup(false)}
+              onClick={() => setShowRegister(false)}
               className="absolute top-2 right-2 text-gray-500 text-2xl"
               aria-label="Close"
             >
               ×
             </button>
-            <SignupForm />
+            <RegisterForm />
           </div>
         </div>
       )}

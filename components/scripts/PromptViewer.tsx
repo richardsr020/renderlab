@@ -1,7 +1,9 @@
+"use client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../AuthProvider';
 import Loader from '../ui/Loader';
+import { API_BASE_URL } from '../../utils/api';
 import Notification from '../ui/Notification';
 
 interface PromptViewerProps {
@@ -10,25 +12,18 @@ interface PromptViewerProps {
 
 const PromptViewer = ({ scriptId }: PromptViewerProps) => {
   const { token } = useAuth();
+  // Debug: afficher le token reçu
+  useEffect(() => {
+    console.log('Token reçu dans PromptViewer:', token);
+  }, [token]);
   const [prompts, setPrompts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    async function fetchPrompts() {
-      setLoading(true);
-      try {
-        const res = await axios.get('/api/scripts/latest-prompts', {
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
-        });
-        setPrompts(res.data.scenes || []);
-      } catch (err: any) {
-        setError(err.response?.data?.error || 'Erreur lors du chargement des prompts');
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchPrompts();
+    // Route non documentée, désactivée
+    setPrompts([]);
+    setLoading(false);
   }, [scriptId, token]);
 
   if (loading) return <Loader />;

@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.839.0",
-    "@headlessui/react": "^2.2.4",
+    "@headlessui/react": "^2.2.7",
     "@prisma/client": "^6.10.1",
     "@uploadthing/react": "^7.3.2",
     "autoprefixer": "^10.4.21",
@@ -26,6 +26,7 @@
     "prisma": "^6.10.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-icons": "^5.5.0",
     "react-toastify": "^11.0.5",
     "sharp": "^0.34.2",
     "zod": "^3.25.67",
