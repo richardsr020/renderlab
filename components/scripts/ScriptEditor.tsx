@@ -12,6 +12,7 @@ const ScriptEditor = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const { token } = useAuth();
   // Debug: afficher le token reçu
   React.useEffect(() => {
@@ -23,22 +24,25 @@ const ScriptEditor = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
     setLoading(true);
-    // Debug: lire le token depuis le localStorage
     const localToken = localStorage.getItem('token');
-    console.log('Token envoyé dans ScriptEditor (contexte):', token);
-    console.log('Token envoyé dans ScriptEditor (localStorage):', localToken);
     const headers = localToken ? { Authorization: `Bearer ${localToken}` } : {};
-    console.log('Headers envoyés:', headers);
+    let redirectDelay = 2000; // durée d'affichage de la notification (ms)
     try {
-      const res = await axios.post(`${API_BASE_URL}/api/scripts`, { title, content }, {
+      await axios.post(`${API_BASE_URL}/api/scripts`, { title, content }, {
         headers,
       });
-      router.push(`/scripts/${res.data.id}`);
+      setSuccess('Script créé avec succès !');
+      setTitle('');
+      setContent('');
     } catch (err: any) {
       setError(err.response?.data?.error || 'Erreur lors de la création du script');
     } finally {
       setLoading(false);
+      setTimeout(() => {
+        router.push('/scripts');
+      }, redirectDelay);
     }
   };
 
@@ -52,6 +56,7 @@ const ScriptEditor = () => {
     >
       <h2 className="text-2xl font-bold text-gray-800 mb-2">Nouveau script</h2>
       {error && <Notification message={error} type="error" />}
+      {success && <Notification message={success} type="success" />}
       <input
         type="text"
         placeholder="Titre"

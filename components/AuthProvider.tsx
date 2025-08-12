@@ -15,7 +15,9 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any>(
+    typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('user') || 'null') : null
+  );
   const [token, setToken] = useState<string | null>(
     typeof window !== 'undefined' ? localStorage.getItem('token') : null
   );
@@ -49,7 +51,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setRefreshToken(res.data.refresh_token);
           localStorage.setItem('refresh_token', res.data.refresh_token);
         }
-        setUser({ email });
+        // Récupère l'id utilisateur si présent dans la réponse
+        const userData: any = { email };
+        if (res.data.id) userData.id = res.data.id;
+        setUser(userData);
+        localStorage.setItem('user', JSON.stringify(userData));
       } else {
         throw new Error('Token not received');
       }
@@ -63,6 +69,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const router = typeof window !== 'undefined' ? require('next/navigation').useRouter() : null;
   const logout = async () => {
     if (refreshToken) {
       try {
@@ -74,6 +81,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
     setToken(null);
     setRefreshToken(null);
+    localStorage.removeItem('user');
+    if (router) router.replace('/');
   };
 
   // Fonction pour rafraîchir le JWT

@@ -9,19 +9,25 @@ import { FcGoogle } from 'react-icons/fc';
 import { HiArrowLeft } from 'react-icons/hi';
 
 const LoginForm = () => {
+  const router = useRouter();
+  const { token, login } = useAuth();
+  React.useEffect(() => {
+    if (token) {
+      router.push('/scripts');
+    }
+  }, [token, router]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
-
-  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
     try {
+      // ...existing code...
+      const { API_BASE_URL } = await import('../utils/api');
       await login(email, password);
       router.push('/');
     } catch (err: any) {

@@ -17,6 +17,7 @@ interface ScriptDetailsProps {
 }
 
 const ScriptDetails = ({ id }: ScriptDetailsProps) => {
+  const [showPrompts, setShowPrompts] = useState(false);
   const { logout } = useAuth();
   const { token } = useAuth();
   // Debug: afficher le token reçu
@@ -32,22 +33,12 @@ const ScriptDetails = ({ id }: ScriptDetailsProps) => {
   useEffect(() => {
     async function fetchScript() {
       setLoading(true);
-      // Debug: lire le token depuis le localStorage
+      setError(null);
       const localToken = localStorage.getItem('token');
-      console.log('Token envoyé dans ScriptDetails (contexte):', token);
-      console.log('Token envoyé dans ScriptDetails (localStorage):', localToken);
       const headers = localToken ? { Authorization: `Bearer ${localToken}` } : {};
-      console.log('Headers envoyés:', headers);
-      try {
-        const res = await axios.get(`${API_BASE_URL}/api/scripts/${id}`,
-          { headers }
-        );
-        setScript(res.data);
-      } catch (err: any) {
-        setError(err.response?.data?.error || 'Erreur lors du chargement du script');
-      } finally {
-        setLoading(false);
-      }
+      const res = await axios.get(`${API_BASE_URL}/api/scripts/${id}`, { headers });
+      setScript(res.data);
+      setLoading(false);
     }
     fetchScript();
   }, [id, token]);
@@ -89,7 +80,7 @@ const ScriptDetails = ({ id }: ScriptDetailsProps) => {
         <button
           className="flex items-center gap-1 focus:outline-none"
           onClick={() => router.push(`/prompts/${id}`)}
-          title="View generated prompts"
+          title="Voir les prompts générés"
         >
           <HiSparkles className="text-blue-400 text-lg" />
           <span className="text-xs font-semibold">{script.prompts ? script.prompts.length : 0}</span>
